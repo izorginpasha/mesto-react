@@ -1,0 +1,5 @@
+.popup__form{
+    box-sizing: border-box;
+    display: grid;
+    align-content: space-between;
+}
