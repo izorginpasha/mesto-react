@@ -6,7 +6,12 @@ class PopupWithForm extends React.Component {
       this.props= props;
   
     }
-      render(){
+render(){
+
+      
+
+
+
         if(this.props.isOpen){
         return(
           
