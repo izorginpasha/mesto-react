@@ -79,11 +79,9 @@ class Main extends React.Component {
         <section className="element">
           <ul className="element__container">
             {this.state.cards.map((card) => (
-              <Card
-                key={card._id}
-                card={card}
-                onCardClick={this.props.onCardClick}
-              />
+              <li  className="element-item" key={card._id}>
+                <Card card={card} onCardClick={this.props.onCardClick} />
+              </li>
             ))}
           </ul>
         </section>
