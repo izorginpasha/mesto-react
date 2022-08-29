@@ -63,20 +63,7 @@ closeAllPopups=()=>{
         < PopupWithForm name='#popupNewAvatar' title="Обновить аватар" children={this.popupNewAvatar} isOpen={this.state.isEditAvatarPopupOpen} onClose={this.closeAllPopups}/>
         < PopupWithForm name='#popupNewMesto"' title="Новое место" children={this.popupNewMesto} isOpen={this.state.isAddPlacePopupOpen} onClose={this.closeAllPopups}/>
         <ImagePopup isOpen={this.state.selectedCard} onClose={this.closeAllPopups} card={this.card}/>
-        <div className="popup" id="popupNewMesto">
-            <div className="popup__overlay"></div>
-            <div className="popup__container">
-                <form className="popup__form" id="popupFormNewMesto" name="popup-form-mesto">
-                    <h3 className="popup__title">Новое место</h3>
-                    <input className="popup__text " type="text" id="popupName" name="popup-name" placeholder="Название" required minlength="2" maxlength="30"/>
-                    <span className="popup__error"  id="span-popup-name"></span>
-                    <input className="popup__text" type="url" id="popupLink" name="popup-Link" placeholder="Ссылка на картинку" required/>
-                    <span className="popup__error" id="span-popup-Link"></span>
-                    <button className="popup__button" disabled type="submit" id="buttonNew"><span className="popup__button-title">Сохранить</span></button>
-                </form>
-                <button className="popup__close" aria-label="close" type="button"></button>
-            </div>
-        </div>
+        
     </div>
     </div>
   )
