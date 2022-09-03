@@ -7,75 +7,35 @@ import ImagePopup from "./ImagePopup.js";
 import "../index.css";
 
 function App(props) {
-  const popupDelCard = <></>;
-  const popupNewAvatar = (
-    <>
-      <input
-        className="popup__text"
-        type="url"
-        id="popupLinkAvatar"
-        name="popup-Link-avatar"
-        placeholder="Ссылка на картинку"
-        required
-      />
-      <span className="popup__error" id="span-popup-Link-avatar"></span>
-    </>
-  );
-  const popupNewMesto = (
-    <>
-      <input
-        className="popup__text "
-        type="text"
-        id="popupName"
-        name="popup-name"
-        placeholder="Название"
-        required
-        minLength={2}
-        maxLength={30}
-      />
-      <span className="popup__error" id="span-popup-name"></span>
-      <input
-        className="popup__text"
-        type="url"
-        id="popupLink"
-        name="popup-Link"
-        placeholder="Ссылка на картинку"
-        required
-      />
-      <span className="popup__error" id="span-popup-Link"></span>
-    </>
-  );
-  const [state , setState] = React.useState({
-    isEditProfilePopupOpen: false,
-    isAddPlacePopupOpen: false,
-    isEditAvatarPopupOpen: false,
-    selectedCard: false,
-    card:{},
+  const [state, setState] = React.useState({
+    card: {},
   });
- 
- 
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
-  function handleCardClick (card) {
-    setState({ selectedCard: true,
-        card:card,});
-  };
-  function  handleEditAvatarClick () {
-    setState({ isEditAvatarPopupOpen: true });
-  };
-  function  handleEditProfileClick  () {
-    setState({ isEditProfilePopupOpen: true });
-  };
-  function handleAddPlaceClick  () {
-    setState({ isAddPlacePopupOpen: true });
-  };
-  function  closeAllPopups () {
-    setState({
-      isEditProfilePopupOpen: false,
-      isAddPlacePopupOpen: false,
-      isEditAvatarPopupOpen: false,
-      selectedCard: false,
-    });
-  };
+  function handleCardClick(card) {
+    setSelectedCard( true );
+   setState({card: card});
+  }
+  function handleEditAvatarClick() {
+    setEditAvatarPopupOpen(true );
+  }
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen( true);
+  }
+  function handleAddPlaceClick() {
+    setAddPlacePopupOpen(true );
+  }
+  function closeAllPopups() {
+   
+    setEditProfilePopupOpen(false );
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false );
+     setSelectedCard( false );
+  }
 
   return (
     <div className="page">
@@ -91,32 +51,33 @@ function App(props) {
         <PopupWithForm
           name="#popupProfile"
           title="Редактировать профиль"
-          isOpen={state.isEditProfilePopupOpen}
+          children={""}
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         />
         <PopupWithForm
           name="#popupDelCard"
           title="Вы уверены?"
-          children={popupDelCard}
+          children={""}
           isOpen={false}
           onClose={false}
         />
         <PopupWithForm
           name="#popupNewAvatar"
           title="Обновить аватар"
-          children={popupNewAvatar}
-          isOpen={state.isEditAvatarPopupOpen}
+          children={""}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
         <PopupWithForm
-          name='#popupNewMesto"'
+          name="#popupNewMesto"
           title="Новое место"
-          children={popupNewMesto}
-          isOpen={state.isAddPlacePopupOpen}
+          children={""}
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         />
         <ImagePopup
-          isOpen={state.selectedCard}
+          isOpen={selectedCard}
           onClose={closeAllPopups}
           card={state.card}
         />
