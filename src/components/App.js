@@ -7,34 +7,37 @@ import ImagePopup from "./ImagePopup.js";
 import "../index.css";
 
 function App(props) {
-  const [state, setState] = React.useState({
-    card: {},
-  });
+
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({
+    selectedCard: false,
+    card: {}
+  });
 
   function handleCardClick(card) {
-    setSelectedCard( true );
-   setState({card: card});
+    setSelectedCard({
+      selectedCard: true,
+      card: card
+    });
   }
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true );
+    setEditAvatarPopupOpen(true);
   }
   function handleEditProfileClick() {
-    setEditProfilePopupOpen( true);
+    setEditProfilePopupOpen(true);
   }
   function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true );
+    setAddPlacePopupOpen(true);
   }
   function closeAllPopups() {
-   
-    setEditProfilePopupOpen(false );
+
+    setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setEditAvatarPopupOpen(false );
-     setSelectedCard( false );
+    setEditAvatarPopupOpen(false);
+    setSelectedCard(false);
   }
 
   return (
@@ -51,7 +54,30 @@ function App(props) {
         <PopupWithForm
           name="#popupProfile"
           title="Редактировать профиль"
-          children={""}
+          children={<>
+            <input
+              className="popup__text "
+              type="text"
+              id="popupFio"
+              name="popup-fio"
+              required
+              minLength={2}
+              maxLength={40}
+              placeholder="Имя"
+            />
+            <span className="popup__error" id="span-popup-fio"></span>
+            <input
+              className="popup__text"
+              type="text"
+              id="popupHobby"
+              name="popup-hobby"
+              required
+              minLength={2}
+              maxLength={200}
+              placeholder="Занятие"
+            />
+            <span className="popup__error" id="span-popup-hobby"></span>
+          </>}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         />
@@ -65,21 +91,52 @@ function App(props) {
         <PopupWithForm
           name="#popupNewAvatar"
           title="Обновить аватар"
-          children={""}
+          children={<>
+            <input
+              className="popup__text"
+              type="url"
+              id="popupLinkAvatar"
+              name="popup-Link-avatar"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="popup__error" id="span-popup-Link-avatar"></span>
+          </>}
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
         <PopupWithForm
           name="#popupNewMesto"
           title="Новое место"
-          children={""}
+          children={<>
+            <input
+              className="popup__text "
+              type="text"
+              id="popupName"
+              name="popup-name"
+              placeholder="Название"
+              required
+              minLength={2}
+              maxLength={30}
+            />
+            <span className="popup__error" id="span-popup-name"></span>
+            <input
+              className="popup__text"
+              type="url"
+              id="popupLink"
+              name="popup-Link"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="popup__error" id="span-popup-Link"></span>
+          </>}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         />
         <ImagePopup
-          isOpen={selectedCard}
+          isOpen={selectedCard.selectedCard}
           onClose={closeAllPopups}
-          card={state.card}
+          card={selectedCard.card}
         />
       </div>
     </div>
