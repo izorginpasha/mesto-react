@@ -8,31 +8,31 @@ import "../index.css";
 
 function App(props) {
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = // стеит открытия попап профиль
     React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);// стеит открытия попап карточки создания
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);// стеит открытия попап смена аватара
+  const [selectedCard, setSelectedCard] = React.useState({// стеит открытия попап картинки
     selectedCard: false,
     card: {}
   });
 
-  function handleCardClick(card) {
+  function handleCardClick(card) {// обрабочик клика клика по каринке
     setSelectedCard({
       selectedCard: true,
       card: card
     });
   }
-  function handleEditAvatarClick() {
+  function handleEditAvatarClick() { // обрабочик смены аватара
     setEditAvatarPopupOpen(true);
   }
-  function handleEditProfileClick() {
+  function handleEditProfileClick() {// обрабочик смены данных профиля
     setEditProfilePopupOpen(true);
   }
-  function handleAddPlaceClick() {
+  function handleAddPlaceClick() {// обрабочик добавления карточки
     setAddPlacePopupOpen(true);
   }
-  function closeAllPopups() {
+  function closeAllPopups() {// обрабочик закрытия попап
 
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
