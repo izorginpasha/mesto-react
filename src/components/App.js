@@ -4,10 +4,13 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
+import EditProfilePopup from "./EditProfilePopup.js";
 import "../index.css";
-
+import { api } from "../utils/Api.js";
+import { CurrentUserContext, сurrentUser } from '../contexts/CurrentUserContext.js';
 function App(props) {
-
+  const [currentUsercontext, setCurrentUser] = // стеит
+    React.useState({});
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = // стеит открытия попап профиль
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);// стеит открытия попап карточки создания
@@ -17,11 +20,28 @@ function App(props) {
     card: {}
   });
 
+  React.useEffect(() => {
+    function iscurrentUser() {
+      //получение данных профиля
+      api
+        .getUser()
+        .then((result) => {
+          setCurrentUser(result);
+          Object.assign(currentUsercontext, result);
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
+    };
+    iscurrentUser();
+
+  }, []);
   function handleCardClick(card) {// обрабочик клика клика по каринке
     setSelectedCard({
       selectedCard: true,
       card: card
     });
+
   }
   function handleEditAvatarClick() { // обрабочик смены аватара
     setEditAvatarPopupOpen(true);
@@ -41,105 +61,79 @@ function App(props) {
   }
 
   return (
-    <div className="page">
-      <div className="page__container">
-        <Header />
-        <Main
-          isEditProfilePopupOpen={handleEditProfileClick}
-          isAddPlacePopupOpen={handleAddPlaceClick}
-          isEditAvatarPopupOpen={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-        />
-        <Footer />
-        <PopupWithForm
-          name="#popupProfile"
-          title="Редактировать профиль"
-          children={<>
-            <input
-              className="popup__text "
-              type="text"
-              id="popupFio"
-              name="popup-fio"
-              required
-              minLength={2}
-              maxLength={40}
-              placeholder="Имя"
-            />
-            <span className="popup__error" id="span-popup-fio"></span>
-            <input
-              className="popup__text"
-              type="text"
-              id="popupHobby"
-              name="popup-hobby"
-              required
-              minLength={2}
-              maxLength={200}
-              placeholder="Занятие"
-            />
-            <span className="popup__error" id="span-popup-hobby"></span>
-          </>}
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          name="#popupDelCard"
-          title="Вы уверены?"
-          children={""}
-          isOpen={false}
-          onClose={false}
-        />
-        <PopupWithForm
-          name="#popupNewAvatar"
-          title="Обновить аватар"
-          children={<>
-            <input
-              className="popup__text"
-              type="url"
-              id="popupLinkAvatar"
-              name="popup-Link-avatar"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="popup__error" id="span-popup-Link-avatar"></span>
-          </>}
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          name="#popupNewMesto"
-          title="Новое место"
-          children={<>
-            <input
-              className="popup__text "
-              type="text"
-              id="popupName"
-              name="popup-name"
-              placeholder="Название"
-              required
-              minLength={2}
-              maxLength={30}
-            />
-            <span className="popup__error" id="span-popup-name"></span>
-            <input
-              className="popup__text"
-              type="url"
-              id="popupLink"
-              name="popup-Link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="popup__error" id="span-popup-Link"></span>
-          </>}
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        />
-        <ImagePopup
-          isOpen={selectedCard.selectedCard}
-          onClose={closeAllPopups}
-          card={selectedCard.card}
-        />
+    <CurrentUserContext.Provider value={currentUsercontext}>
+      <div className="page">
+        <div className="page__container">
+          <Header />
+          <Main
+            isEditProfilePopupOpen={handleEditProfileClick}
+            isAddPlacePopupOpen={handleAddPlaceClick}
+            isEditAvatarPopupOpen={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+          />
+          <Footer />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} /> 
+        
+          <PopupWithForm
+            name="#popupDelCard"
+            title="Вы уверены?"
+            children={""}
+            isOpen={false}
+            onClose={false}
+          />
+          <PopupWithForm
+            name="#popupNewAvatar"
+            title="Обновить аватар"
+            children={<>
+              <input
+                className="popup__text"
+                type="url"
+                id="popupLinkAvatar"
+                name="popup-Link-avatar"
+                placeholder="Ссылка на картинку"
+                required
+              />
+              <span className="popup__error" id="span-popup-Link-avatar"></span>
+            </>}
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+          />
+          <PopupWithForm
+            name="#popupNewMesto"
+            title="Новое место"
+            children={<>
+              <input
+                className="popup__text "
+                type="text"
+                id="popupName"
+                name="popup-name"
+                placeholder="Название"
+                required
+                minLength={2}
+                maxLength={30}
+              />
+              <span className="popup__error" id="span-popup-name"></span>
+              <input
+                className="popup__text"
+                type="url"
+                id="popupLink"
+                name="popup-Link"
+                placeholder="Ссылка на картинку"
+                required
+              />
+              <span className="popup__error" id="span-popup-Link"></span>
+            </>}
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+          />
+          <ImagePopup
+            isOpen={selectedCard.selectedCard}
+            onClose={closeAllPopups}
+            card={selectedCard.card}
+          />
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 export default App;
