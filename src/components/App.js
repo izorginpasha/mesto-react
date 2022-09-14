@@ -9,7 +9,9 @@ import "../index.css";
 import { api } from "../utils/Api.js";
 import { CurrentUserContext, сurrentUser } from '../contexts/CurrentUserContext.js';
 function App(props) {
-  const [currentUsercontext, setCurrentUser] = // стеит
+  const  [textButtonSave, setTextButtonSave] = // стеит данных пользователя
+  React.useState("Сохранить");
+  const [currentUsercontext, setCurrentUser] = // стеит данных пользователя
     React.useState({});
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = // стеит открытия попап профиль
     React.useState(false);
@@ -59,6 +61,20 @@ function App(props) {
     setEditAvatarPopupOpen(false);
     setSelectedCard(false);
   }
+  function handleUpdateUser({ name, about }) {// обрабочик добавления данных профмля
+    //setTextButtonSave();
+    api.setUserProfile(name, about).then((result) => {
+      setCurrentUser(result);
+      Object.assign(currentUsercontext, result);; // добавляем результат запроса на страницу
+      setEditProfilePopupOpen(false);//закрываем окно
+    })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      })
+      .finally(() => {
+        // popupProfile.buttonSpan.textContent = "Сохранить";
+      });
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUsercontext}>
@@ -72,8 +88,8 @@ function App(props) {
             onCardClick={handleCardClick}
           />
           <Footer />
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} /> 
-        
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+
           <PopupWithForm
             name="#popupDelCard"
             title="Вы уверены?"

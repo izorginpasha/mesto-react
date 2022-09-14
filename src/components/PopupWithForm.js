@@ -19,9 +19,10 @@ class PopupWithForm extends React.Component {
               }
               <button
                 className="popup__button"
-                disabled
+                //disabled
                 type="submit"
                 id="button"
+                onClick={this.props.onSubmit}
               >
                 <span className="popup__button-title">Сохранить</span>
               </button>
