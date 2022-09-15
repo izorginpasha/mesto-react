@@ -3,9 +3,9 @@ import PopupWithForm from "./PopupWithForm.js";
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 function EditProfilePopup(props) {
 
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const currentUser = React.useContext(CurrentUserContext);
+  const [name, setName] = React.useState('');// имя профиля
+  const [description, setDescription] = React.useState('');// хоби профиля
+  const currentUser = React.useContext(CurrentUserContext);// данные профиля
 
   // После загрузки текущего пользователя из API
   // его данные будут использованы в управляемых компонентах.
@@ -20,17 +20,17 @@ function EditProfilePopup(props) {
   function ChangeDescription(e) {
     setDescription(e.target.value);
   }
-  
-  function handleSubmit(e) {
+
+  function handleSubmit(e) {// обрабочик сабмита
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-  
+
     // Передаём значения управляемых компонентов во внешний обработчик
     props.onUpdateUser({
       name: name,
       about: description,
     });
-  } 
+  }
   return (
     <PopupWithForm
       name="#popupProfile"
