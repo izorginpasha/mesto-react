@@ -8,16 +8,18 @@ function Card(props) {
   const isOwn = contetentCard.owner._id === сurrentUsercontext._id;
 
   // Создаём переменную, которую после зададим в `className` для кнопки удаления
-  const cardDeleteButtonClassName = `element-item__basket ${isOwn ? "element-item__basket_open" : ""
-    }`;
+  const cardDeleteButtonClassName = `element-item__basket ${
+    isOwn ? "element-item__basket_open" : ""
+  }`;
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = contetentCard.likes.some(
     (i) => i._id === сurrentUsercontext._id
   );
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
-  const cardLikeButtonClassName = `element-item__heart ${isLiked ? "element-item__heart_like" : ""
-    }`;
+  const cardLikeButtonClassName = `element-item__heart ${
+    isLiked ? "element-item__heart_like" : ""
+  }`;
   function handleClick() {
     props.onCardClick(contetentCard);
   }
@@ -28,7 +30,6 @@ function Card(props) {
     props.onCardDelete(contetentCard);
   }
 
-
   return (
     <>
       <button
@@ -37,12 +38,13 @@ function Card(props) {
         type="button"
         onClick={handleDeleteClick}
       ></button>
-      <img
+      <div
         className="element-item__image"
         onClick={handleClick}
+        src=""
+        alt={contetentCard.name}
         style={{ backgroundImage: `url(${contetentCard.link})` }}
-        alt=""
-      />
+      ></div>
       <div className="element-item__content">
         <h2 className="element-item__title">{contetentCard.name}</h2>
         <div className="element-item__grop">

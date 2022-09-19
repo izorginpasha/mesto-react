@@ -1,42 +1,35 @@
-import React from "react";
+import React from 'react'
 
-class PopupWithForm extends React.Component {
-
-  render() {
-    if (this.props.isOpen) {
-      return (
-        <div className="popup popup_opened" id={this.props.name}>
-          <div className="popup__overlay"></div>
-          <div className="popup__container">
-            <form
-              className="popup__form"
-              id={`popupForm${this.props.name}`}
-              name={`popup-form-${this.props.name}`}
-            >
-              <h3 className="popup__title">{this.props.title}</h3>
-              {
-                this.props.children
-              }
-              <button
-                className="popup__button"
-                //disabled
-                type="submit"
-                id="button"
-                onClick={this.props.onSubmit}
-              >
-                <span className="popup__button-title">Сохранить</span>
-              </button>
-            </form>
-            <button
-              className="popup__close"
-              aria-label="close"
-              type="button"
-              onClick={this.props.onClose}
-            ></button>
-          </div>
-        </div>
-      );
-    }
-  }
+function PopupWithForm(props) {
+  return (
+    <div className={`popup ${props.isOpen && 'popup_opened'}`} id={props.name}>
+      <div className="popup__overlay"></div>
+      <div className="popup__container">
+        <form
+          className="popup__form"
+          id={`popupForm${props.name}`}
+          name={`popup-form-${props.name}`}
+        >
+          <h3 className="popup__title">{props.title}</h3>
+          {props.children}
+          <button
+            className="popup__button"
+            //disabled
+            type="submit"
+            id="button"
+            onClick={props.onSubmit}
+          >
+            <span className="popup__button-title">{props.buttonText}</span>
+          </button>
+        </form>
+        <button
+          className="popup__close"
+          aria-label="close"
+          type="button"
+          onClick={props.onClose}
+        ></button>
+      </div>
+    </div>
+  )
 }
-export default PopupWithForm;
+export default PopupWithForm

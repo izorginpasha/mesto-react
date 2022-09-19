@@ -10,6 +10,12 @@ function EditAvatarPopup(props) {
             avatar: refAvatar.current.value,/* Значение инпута, полученное с помощью рефа */
         });
     }
+    React.useEffect(() => {
+        if (refAvatar && refAvatar.current) {
+            refAvatar.current.value = "";
+        };
+       
+    }, [props.isOpen]);
 
     return (
         <PopupWithForm
@@ -30,6 +36,7 @@ function EditAvatarPopup(props) {
             isOpen={props.isOpen}
             onClose={props.onClose}
             onSubmit={handleSubmit}
+            buttonText={props.buttonText}
         />
     );
 }
